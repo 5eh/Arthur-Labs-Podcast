@@ -12,6 +12,8 @@ export type Episode = {
   }
   duration: number
   artwork: string | null
+  isSpotify: boolean // Flag to identify Spotify content
+  spotifyId: string // Store the Spotify ID for embedding
 }
 
 let tokenCache: {
@@ -47,7 +49,6 @@ async function getSpotifyToken() {
     }
 
     const data = await response.json()
-
     tokenCache = {
       token: data.access_token,
       expiry: Date.now() + data.expires_in * 1000 - 60000,
@@ -62,13 +63,9 @@ async function getSpotifyToken() {
 
 // Transform Spotify episode data to match our expected Episode type
 function transformSpotifyEpisode(spotifyEpisode: any): Episode {
-  // Get the thumbnail image URL
+  // Extract artwork
   let artwork = null
-
-  // Check if images array exists and has at least one image
   if (spotifyEpisode.images && spotifyEpisode.images.length > 0) {
-    // Prefer smaller images for thumbnails (usually the last one is smallest)
-    // But fallback to any available image
     const smallImage = spotifyEpisode.images[spotifyEpisode.images.length - 1]
     const anyImage = spotifyEpisode.images[0]
     artwork = smallImage?.url || anyImage?.url || null
@@ -82,13 +79,14 @@ function transformSpotifyEpisode(spotifyEpisode: any): Episode {
     // Create HTML content from the description
     content: `<p>${spotifyEpisode.description}</p>`,
     audio: {
-      src:
-        spotifyEpisode.audio_preview_url ||
-        spotifyEpisode.external_urls.spotify,
-      type: 'audio/mpeg',
+      // Using a special format to indicate this is for Spotify embed
+      src: `spotify:episode:${spotifyEpisode.id}`,
+      type: 'spotify', // Mark as Spotify type
     },
     duration: spotifyEpisode.duration_ms,
     artwork: artwork,
+    isSpotify: true, // Flag this as Spotify content
+    spotifyId: spotifyEpisode.id, // Store the ID for embedding
   }
 }
 
@@ -113,7 +111,6 @@ export const getAllEpisodes = cache(async (): Promise<Episode[]> => {
     }
 
     const data = await response.json()
-
     const episodes = data.items.map(transformSpotifyEpisode)
 
     return episodes
@@ -123,6 +120,7 @@ export const getAllEpisodes = cache(async (): Promise<Episode[]> => {
   }
 })
 
+// Get a specific episode by ID
 export async function getEpisode(id: string): Promise<Episode | null> {
   try {
     const token = await getSpotifyToken()
@@ -144,7 +142,6 @@ export async function getEpisode(id: string): Promise<Episode | null> {
     }
 
     const episodeData = await response.json()
-
     // Transform to our Episode type
     return transformSpotifyEpisode(episodeData)
   } catch (error) {
