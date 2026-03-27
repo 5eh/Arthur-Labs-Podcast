@@ -1,0 +1,29 @@
+# Arthur Labs Podcast
+
+> The Arthur Labs Podcast (podcast.arthurlabs.net) is an analysis podcast series covering major whitepapers focused on cryptography, blockchains, and emerging technologies. Each episode provides in-depth breakdowns of foundational and cutting-edge research papers, making complex technical concepts accessible to developers, entrepreneurs, and technology enthusiasts.
+
+## Episodes & Content
+
+- [Home](https://podcast.arthurlabs.net/): Episode listing, podcast player, and subscription links
+- Episodes cover analysis of whitepapers on topics including: Bitcoin, Ethereum, zero-knowledge proofs, consensus mechanisms, Layer 2 scaling, DeFi protocols, smart contract security, and emerging blockchain architectures
+
+## Topics Covered
+
+- Cryptography research and protocol analysis
+- Blockchain architecture and consensus mechanism whitepapers
+- DeFi protocol design and economic models
+- Smart contract security research
+- Layer 2 scaling solutions
+- Emerging Web3 technologies and standards
+
+## Format
+
+- Deep-dive audio analysis of published whitepapers and technical research
+- Accessible explanations of complex cryptographic and blockchain concepts
+- Commentary on practical implications for developers and entrepreneurs
+
+## Parent Company
+
+- Arthur Labs Inc., Wyoming S-Corporation
+- Website: https://arthurlabs.net
+- Contact: support@arthurlabs.net
