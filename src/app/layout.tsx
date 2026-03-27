@@ -1,5 +1,6 @@
 import { type Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/react'
+import EcosystemBar from '@/components/EcosystemBar'
 
 import '@/styles/tailwind.css'
 
@@ -82,6 +83,7 @@ export default function RootLayout({
         />
       </head>
       <body className="flex min-h-full">
+        <EcosystemBar />
         <div className="w-full">{children}</div>
         <Analytics />
       </body>
